@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Insurance Cost Predictor</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f4f4f4;
+text-align:center;
+}
+
+.container{
+background:white;
+padding:30px;
+width:400px;
+margin:auto;
+margin-top:50px;
+border-radius:10px;
+box-shadow:0px 0px 10px gray;
+}
+
+input,select{
+width:90%;
+padding:8px;
+margin:5px;
+}
+
+button{
+background:#007BFF;
+color:white;
+padding:10px;
+border:none;
+cursor:pointer;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Insurance Cost Predictor</h2>
+
+<form action="/predict" method="post">
+
+<input type="number" name="age" placeholder="Age" required>
+
+<input type="number" step="0.1" name="bmi" placeholder="BMI" required>
+
+<input type="number" name="children" placeholder="Children" required>
+
+<select name="sex">
+<option value="male">Male</option>
+<option value="female">Female</option>
+</select>
+
+<select name="smoker">
+<option value="yes">Smoker</option>
+<option value="no">Non Smoker</option>
+</select>
+
+<select name="region">
+<option value="northwest">Northwest</option>
+<option value="southeast">Southeast</option>
+<option value="southwest">Southwest</option>
+<option value="northeast">Northeast</option>
+</select>
+
+<br><br>
+
+<button type="submit">Predict</button>
+
+</form>
+
+{% if prediction %}
+
+<h3>Predicted Cost: $ {{prediction}}</h3>
+
+<canvas id="chart"></canvas>
+
+<script>
+
+var ctx = document.getElementById('chart');
+
+new Chart(ctx,{
+type:'bar',
+data:{
+labels:['Predicted Cost'],
+datasets:[{
+label:'Insurance Cost',
+data:[{{prediction}}],
+}]
+}
+});
+
+</script>
+
+{% endif %}
+
+</div>
+
+</body>
+</html>
